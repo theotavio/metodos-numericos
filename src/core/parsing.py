@@ -4,14 +4,24 @@ _TRANSFORMS = sp.parsing.sympy_parser.standard_transformations + (
     sp.parsing.sympy_parser.implicit_multiplication_application,
 )
 
+_CONSTANTES = {"e": sp.E, "pi": sp.pi, "E": sp.E, "I": sp.I, "oo": sp.oo}
+
+
+def _dicionario_local(*variaveis):
+    dic = dict(_CONSTANTES)
+    for v in variaveis:
+        dic.pop(v, None)
+        dic[v] = sp.symbols(v)
+    return dic
+
 
 def parse_funcao_1var(expressao_str, variavel="x"):
     try:
-        simbolo = sp.symbols(variavel)
+        dic = _dicionario_local(variavel)
         expr = sp.parsing.sympy_parser.parse_expr(
-            expressao_str, local_dict={variavel: simbolo}, transformations=_TRANSFORMS
+            expressao_str, local_dict=dic, transformations=_TRANSFORMS
         )
-        func = sp.lambdify(simbolo, expr, modules=["numpy"])
+        func = sp.lambdify(dic[variavel], expr, modules=["numpy"])
         return expr, func
     except Exception as exc:
         raise ValueError(f"Não foi possível interpretar a função '{expressao_str}': {exc}")
@@ -19,11 +29,11 @@ def parse_funcao_1var(expressao_str, variavel="x"):
 
 def parse_funcao_2var(expressao_str, var1="t", var2="y"):
     try:
-        s1, s2 = sp.symbols(f"{var1} {var2}")
+        dic = _dicionario_local(var1, var2)
         expr = sp.parsing.sympy_parser.parse_expr(
-            expressao_str, local_dict={var1: s1, var2: s2}, transformations=_TRANSFORMS
+            expressao_str, local_dict=dic, transformations=_TRANSFORMS
         )
-        func = sp.lambdify((s1, s2), expr, modules=["numpy"])
+        func = sp.lambdify((dic[var1], dic[var2]), expr, modules=["numpy"])
         return expr, func
     except Exception as exc:
         raise ValueError(f"Não foi possível interpretar a função '{expressao_str}': {exc}")
