@@ -1,3 +1,9 @@
+"""
+Módulo de Métodos Numéricos para Encontrar Raízes de Funções de Uma Variável: f(x) = 0.
+Implementa: Bisseção, Newton-Raphson, Cordas (Falsa Posição), Pégaso (Acelerado) e Iteração Linear (Ponto Fixo).
+"""
+
+
 def metodo_bissecao(f, a, b, tol=1e-6, max_iter=100):
     historico = []
     try:
@@ -7,9 +13,9 @@ def metodo_bissecao(f, a, b, tol=1e-6, max_iter=100):
                 "erro": f"Erro ao avaliar f(x) nos extremos: {exc}"}
 
     if fa == 0:
-        return {"sucesso": True, "resultado": a, "historico": ["f(a) = 0 -> raiz exata em a"], "erro": None}
+        return {"sucesso": True, "resultado": a, "historico": ["f(a) = 0 -> raiz exata em a"], "erro": None, "iteracoes": 0}
     if fb == 0:
-        return {"sucesso": True, "resultado": b, "historico": ["f(b) = 0 -> raiz exata em b"], "erro": None}
+        return {"sucesso": True, "resultado": b, "historico": ["f(b) = 0 -> raiz exata em b"], "erro": None, "iteracoes": 0}
     if fa * fb > 0:
         return {"sucesso": False, "resultado": None, "historico": historico,
                 "erro": "f(a) e f(b) possuem o mesmo sinal. O método exige troca de sinal em [a, b]."}
@@ -75,55 +81,7 @@ def metodo_newton_raphson(f, df, x0, tol=1e-6, max_iter=100):
 
 
 def metodo_cordas(f, a, b, tol=1e-6, max_iter=100):
-    historico = []
-    try:
-        fa, fb = f(a), f(b)
-    except Exception as exc:
-        return {"sucesso": False, "resultado": None, "historico": historico,
-                "erro": f"Erro ao avaliar f(x) nos extremos: {exc}"}
-
-    if fa * fb > 0:
-        return {"sucesso": False, "resultado": None, "historico": historico,
-                "erro": "f(a) e f(b) possuem o mesmo sinal. O método exige troca de sinal em [a, b]."}
-
-    historico.append(f"{'Iter':>4} | {'a':>12} | {'b':>12} | {'x':>12} | {'f(x)':>12} | {'Erro':>12}")
-    x_anterior = a
-    for i in range(1, max_iter + 1):
-        try:
-            fa, fb = f(a), f(b)
-        except Exception as exc:
-            return {"sucesso": False, "resultado": None, "historico": historico,
-                    "erro": f"Erro ao avaliar f(x) na iteração {i}: {exc}"}
-
-        if fb - fa == 0:
-            return {"sucesso": False, "resultado": None, "historico": historico,
-                    "erro": f"Divisão por zero: f(b) - f(a) = 0 na iteração {i}."}
-
-        x = a - fa * (b - a) / (fb - fa)
-        try:
-            fx = f(x)
-        except Exception as exc:
-            return {"sucesso": False, "resultado": None, "historico": historico,
-                    "erro": f"Erro ao avaliar f(x) em x={x}: {exc}"}
-
-        erro_estimado = abs(x - x_anterior)
-        historico.append(f"{i:>4} | {a:>12.6f} | {b:>12.6f} | {x:>12.6f} | {fx:>12.6f} | {erro_estimado:>12.6e}")
-
-        if abs(fx) < tol or erro_estimado < tol:
-            return {"sucesso": True, "resultado": x, "historico": historico, "erro": None, "iteracoes": i}
-
-        if fa * fx < 0:
-            b = x
-        else:
-            a = x
-        x_anterior = x
-
-    return {"sucesso": False, "resultado": x, "historico": historico,
-            "erro": f"Máximo de iterações ({max_iter}) atingido sem convergência para tolerância {tol}.",
-            "iteracoes": max_iter}
-
-
-def metodo_pegaso(f, a, b, tol=1e-6, max_iter=100):
+    """Método das Cordas (Falsa Posição / Regula Falsi)."""
     historico = []
     try:
         fa, fb = f(a), f(b)
@@ -142,7 +100,7 @@ def metodo_pegaso(f, a, b, tol=1e-6, max_iter=100):
             return {"sucesso": False, "resultado": None, "historico": historico,
                     "erro": f"Divisão por zero: f(b) - f(a) = 0 na iteração {i}."}
 
-        x = a - fa * (b - a) / (fb - fa)
+        x = b - fb * (b - a) / (fb - fa)
         try:
             fx = f(x)
         except Exception as exc:
@@ -157,7 +115,6 @@ def metodo_pegaso(f, a, b, tol=1e-6, max_iter=100):
 
         if fa * fx < 0:
             b, fb = x, fx
-            fa = fa / 2.0
         else:
             a, fa = x, fx
         x_anterior = x
@@ -167,7 +124,54 @@ def metodo_pegaso(f, a, b, tol=1e-6, max_iter=100):
             "iteracoes": max_iter}
 
 
+def metodo_pegaso(f, a, b, tol=1e-6, max_iter=100):
+    """Método de Pégaso (Dowell & Jarratt, 1971) - Aceleração com convergência de ordem 1.839."""
+    historico = []
+    try:
+        fa, fb = f(a), f(b)
+    except Exception as exc:
+        return {"sucesso": False, "resultado": None, "historico": historico,
+                "erro": f"Erro ao avaliar f(x) nos extremos: {exc}"}
+
+    if fa * fb > 0:
+        return {"sucesso": False, "resultado": None, "historico": historico,
+                "erro": "f(a) e f(b) possuem o mesmo sinal. O método exige troca de sinal em [a, b]."}
+
+    historico.append(f"{'Iter':>4} | {'a':>12} | {'b':>12} | {'x':>12} | {'f(x)':>12} | {'Erro':>12}")
+    x_anterior = a
+    for i in range(1, max_iter + 1):
+        if fb - fa == 0:
+            return {"sucesso": False, "resultado": None, "historico": historico,
+                    "erro": f"Divisão por zero: f(b) - f(a) = 0 na iteração {i}."}
+
+        x = b - fb * (b - a) / (fb - fa)
+        try:
+            fx = f(x)
+        except Exception as exc:
+            return {"sucesso": False, "resultado": None, "historico": historico,
+                    "erro": f"Erro ao avaliar f(x) em x={x}: {exc}"}
+
+        erro_estimado = abs(x - x_anterior)
+        historico.append(f"{i:>4} | {a:>12.6f} | {b:>12.6f} | {x:>12.6f} | {fx:>12.6f} | {erro_estimado:>12.6e}")
+
+        if abs(fx) < tol or erro_estimado < tol:
+            return {"sucesso": True, "resultado": x, "historico": historico, "erro": None, "iteracoes": i}
+
+        if fb * fx < 0:
+            a, fa = b, fb
+            b, fb = x, fx
+        else:
+            fa = fa * fb / (fb + fx)
+            b, fb = x, fx
+        x_anterior = x
+
+    return {"sucesso": False, "resultado": x, "historico": historico,
+            "erro": f"Máximo de iterações ({max_iter}) atingido sem convergência para tolerância {tol}.",
+            "iteracoes": max_iter}
+
+
 def metodo_iteracao_linear(phi, x0, tol=1e-6, max_iter=100):
+    """Método do Ponto Fixo / Iteração Linear: x = phi(x)."""
     historico = []
     x_atual = x0
     historico.append(f"{'Iter':>4} | {'x_n':>16} | {'phi(x_n)':>16} | {'Erro':>12}")

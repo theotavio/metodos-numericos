@@ -2,16 +2,17 @@
 
 # Métodos Numéricos Computacionais
 
-**Aplicação desktop para resolução de problemas clássicos de Cálculo Numérico**,
-construída em Python com interface gráfica moderna via CustomTkinter.
+**Aplicação desktop moderna e interativa para resolução e visualização de problemas clássicos de Cálculo Numérico**,
+construída em Python com interface gráfica nativa via **PySide6 (Qt 6)** e gráficos dinâmicos via **Matplotlib**.
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![CustomTkinter](https://img.shields.io/badge/CustomTkinter-5.2%2B-5B8CFF?style=for-the-badge)](https://github.com/TomSchimansky/CustomTkinter)
+[![PySide6](https://img.shields.io/badge/PySide6-Qt%206-41CD52?style=for-the-badge&logo=qt&logoColor=white)](https://doc.qt.io/qtforpython-6/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-3.8%2B-11557c?style=for-the-badge)](https://matplotlib.org/)
 [![SymPy](https://img.shields.io/badge/SymPy-1.12%2B-3B5526?style=for-the-badge&logo=python&logoColor=white)](https://www.sympy.org/)
 [![NumPy](https://img.shields.io/badge/NumPy-1.26%2B-013243?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org/)
 
 [![License](https://img.shields.io/badge/License-MIT-33C37F?style=for-the-badge)](#licença)
-[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-0f1117?style=for-the-badge)](#instalação)
+[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-0f1117?style=for-the-badge)](#guia-do-desenvolvedor)
 [![Status](https://img.shields.io/badge/Status-Ativo-33C37F?style=for-the-badge)](#)
 
 </div>
@@ -20,37 +21,40 @@ construída em Python com interface gráfica moderna via CustomTkinter.
 
 ## Sumário
 
-- [Objetivo](#objetivo)
-- [Métodos implementados](#métodos-implementados)
-- [Instalação](#instalação)
-- [Como executar](#como-executar)
-- [Estrutura de arquivos](#estrutura-de-arquivos)
-- [Arquitetura](#arquitetura)
-- [Sintaxe das funções](#sintaxe-das-funções)
-- [Exemplos rápidos](#exemplos-rápidos)
-- [Tratamento de erros](#tratamento-de-erros)
-- [Expandindo com novos métodos](#expandindo-com-novos-métodos)
+- [Visão Geral & Recursos](#visão-geral--recursos)
+- [Métodos Implementados](#métodos-implementados)
+- [Atalhos de Teclado](#atalhos-de-teclado)
+- [Guia do Desenvolvedor](#guia-do-desenvolvedor)
+  - [1. Clonando o Repositório](#1-clonando-o-repositório)
+  - [2. Configurando o Ambiente Virtual](#2-configurando-o-ambiente-virtual)
+  - [3. Instalando as Dependências](#3-instalando-as-dependências)
+  - [4. Executando a Aplicação](#4-executando-a-aplicação)
+  - [5. Testando os Métodos](#5-testando-os-métodos)
+  - [6. Adicionando Novos Métodos Numéricos](#6-adicionando-novos-métodos-numéricos)
 - [Licença](#licença)
 
 ---
 
-## Objetivo
+## Visão Geral & Recursos
 
-Este repositório reúne, em uma única aplicação desktop, os principais métodos
-estudados em disciplinas de **Cálculo Numérico / Métodos Numéricos Computacionais**,
-cobrindo a ementa completa da matéria:
-
-> Erros · Sistemas Lineares · Equações Algébricas e Transcendentes · Interpolação ·
-> Integração Numérica · Equações Diferenciais Ordinárias · Ajuste de Curvas
-
-A proposta é servir tanto como **ferramenta de estudo** — permitindo visualizar o
-passo a passo de cada iteração, erro estimado e convergência — quanto como
-**referência de implementação limpa** dos algoritmos clássicos, com o núcleo
-matemático totalmente desacoplado da interface gráfica.
+- 🎨 **Interface Moderna & Temas**: Modo Claro (*Light*) como padrão e Modo Escuro (*Dark*) com alternância instantânea via botão ou atalho `Ctrl + T`.
+- 📊 **Gráficos Interativos Integrados (Matplotlib)**:
+  - **Raízes**: Curva suave $f(x)$, eixo zero, realce do intervalo $[a, b]$, chute $x_0$ e anotação visual destacada da raiz $x^*$.
+  - **Sistemas Lineares**: Representação geométrica de retas concorrentes ($2\times 2$) e curvas de erro/convergência logarítmica (Gauss-Seidel).
+  - **Interpolação**: Curva contínua do polinômio $P(x)$, nós conhecidos e projeção com guias pontilhadas para o ponto de consulta $x^*$.
+  - **Ajuste de Curvas**: Diagrama de dispersão, reta ajustada de regressão, linhas verticais de resíduos e gráfico de paridade (Real vs Previsto).
+  - **Integração Numérica**: Área sombreada sob a curva e linhas verticais delimitadoras dos subintervalos discretos.
+  - **EDOs**: Trajetória da solução $(t, y)$ combinada com o **campo de direções (slope field)** no plano de fase.
+- 📋 **Exemplos Rápidos em 1 Clique**: Presets clássicos de livros-texto para carregamento e validação imediata em todos os módulos.
+- 💾 **Exportação & Produtividade**:
+  - Exportação direta das tabelas de iteração para arquivos **CSV**.
+  - Cópia formatada de resumos e métricas para a Área de Transferência.
+  - Exportação dos gráficos em alta definição (**PNG, SVG, PDF**).
+- 🚨 **Tratamento Amigável de Erros**: Mensagens de validação e alertas matemáticos exibidos em janelas flutuantes explicativas.
 
 ---
 
-## Métodos implementados
+## Métodos Implementados
 
 <table>
 <tr>
@@ -61,7 +65,7 @@ matemático totalmente desacoplado da interface gráfica.
 - Newton-Raphson (derivada simbólica via SymPy)
 - Método das Cordas
 - Método de Pégaso
-- Iteração Linear
+- Iteração Linear (Ponto Fixo)
 
 ### 🧮 Sistemas Lineares
 - Eliminação de Gauss (com pivoteamento parcial)
@@ -80,260 +84,117 @@ matemático totalmente desacoplado da interface gráfica.
 - Regra dos Trapézios
 - Regra 1/3 de Simpson
 - Regra 3/8 de Simpson
-- Quadratura Gaussiana (2 pontos)
+- Quadratura Gaussiana (2 pontos de Legendre)
 
 ### 📉 Ajuste de Curvas
-- Regressão Linear Simples (mínimos quadrados)
-- Regressão Linear Múltipla (mínimos quadrados)
+- Regressão Linear Simples (mínimos quadrados com $R^2$)
+- Regressão Linear Múltipla (mínimos quadrados matricial com $R^2$)
 
 ### 🌀 Equações Diferenciais Ordinárias
 - Método de Euler
-- Runge-Kutta de 2ª ordem
-- Runge-Kutta de 4ª ordem
+- Runge-Kutta de 2ª ordem (Heun)
+- Runge-Kutta de 4ª ordem (Clássico)
 
 </td>
 </tr>
 </table>
 
-Cada método exibe, na área de resultados:
+---
 
-- **Histórico completo de iterações** (tabela formatada)
-- **Estimativa de erro** a cada passo
-- **Resultado final** destacado
-- **Mensagens de erro claras** em caso de falha de convergência, divisão por zero ou entrada inválida
+## Atalhos de Teclado
+
+| Atalho | Ação |
+|---|---|
+| `Ctrl + 1` a `Ctrl + 6` | Alternar entre os módulos de cálculo |
+| `Ctrl + T` | Alternar entre Modo Claro e Modo Escuro |
+| `F5` ou `Ctrl + Enter` | Executar o cálculo do método selecionado |
+| `Ctrl + C` | Copiar dados da tabela selecionada |
 
 ---
 
-## Instalação
+## Guia do Desenvolvedor
 
-### Pré-requisitos
+Este guia detalha o passo a passo completo para configurar o ambiente de desenvolvimento local, executar e estender a aplicação.
 
-- Python **3.10** ou superior
-- `pip` atualizado
-
-### Passo a passo
+### 1. Clonando o Repositório
 
 ```bash
-# 1. Clone o repositório
 git clone https://github.com/theotavio/metodos-numericos.git
 cd metodos-numericos
+```
 
-# 2. (Recomendado) Crie um ambiente virtual
+### 2. Configurando o Ambiente Virtual
+
+Recomenda-se utilizar um ambiente virtual isolado com Python 3.10 ou superior:
+
+```bash
+# Criação do ambiente virtual
 python -m venv venv
 
-# Linux / macOS
+# Ativação no Linux / macOS:
 source venv/bin/activate
 
-# Windows
+# Ativação no Windows (Prompt de Comando / PowerShell):
 venv\Scripts\activate
+```
 
-# 3. Instale as dependências
+### 3. Instalando as Dependências
+
+Com o ambiente ativado, instale os pacotes listados no `requirements.txt`:
+
+```bash
 pip install -r requirements.txt
 ```
 
-### Dependências
+### 4. Executando a Aplicação
 
-| Biblioteca | Versão mínima | Finalidade |
-|---|---|---|
-| [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter) | 5.2.0 | Interface gráfica moderna |
-| [SymPy](https://www.sympy.org/) | 1.12 | Parsing de expressões e derivação simbólica |
-| [NumPy](https://numpy.org/) | 1.26 | Álgebra linear e operações matriciais |
-
----
-
-## Como executar
-
-Com o ambiente virtual ativado e as dependências instaladas, basta rodar:
+Inicie o ponto de entrada principal:
 
 ```bash
 python src/main.py
 ```
 
-A janela principal abrirá com abas para cada categoria de métodos. Selecione o
-método desejado no menu suspenso, preencha os parâmetros no formulário à
-esquerda e clique em **▶ Executar**.
+### 5. Testando os Métodos
 
----
+Para rodar uma validação rápida de todos os métodos e presets em modo offscreen/headless:
 
-## Estrutura de arquivos
-
-```
-metodos-numericos/
-│
-├── src/
-│   ├── main.py                    # Ponto de entrada da aplicação
-│   │
-│   ├── core/                      # Núcleo matemático — 100% independente de GUI
-│   │   ├── parsing.py             # Conversão de strings em expressões (SymPy)
-│   │   ├── raizes.py              # Bisseção, Newton-Raphson, Cordas, Pégaso, Iteração Linear
-│   │   ├── sistemas_lineares.py   # Eliminação de Gauss, Gauss-Seidel
-│   │   ├── interpolacao.py        # Linear, Quadrática, Lagrange, Diferenças Divididas
-│   │   ├── ajuste_curvas.py       # Regressão linear simples e múltipla
-│   │   ├── integracao.py          # Trapézios, Simpson 1/3 e 3/8, Quadratura Gaussiana
-│   │   └── edo.py                 # Euler, Runge-Kutta 2ª e 4ª ordem
-│   │
-│   └── gui/                       # Camada de interface gráfica (CustomTkinter)
-│       ├── app.py                 # Janela principal e montagem das abas
-│       ├── base_tab.py            # Classe base compartilhada por todas as abas
-│       ├── theme.py               # Paleta de cores, fontes e estilos
-│       ├── widgets.py             # Componentes reutilizáveis (campos, cartões, badges)
-│       └── tabs/                  # Uma aba por categoria de métodos
-│           ├── raizes_tab.py
-│           ├── sistemas_tab.py
-│           ├── interpolacao_tab.py
-│           ├── ajuste_tab.py
-│           ├── integracao_tab.py
-│           └── edo_tab.py
-│
-├── requirements.txt                # Dependências do projeto
-├── .gitignore
-└── README.md
+```bash
+python -c "
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path('src').resolve()))
+from PySide6.QtWidgets import QApplication
+from gui.app import App
+app = QApplication(sys.argv)
+window = App()
+for tab in [window.tab_raizes, window.tab_sistemas, window.tab_interpolacao, window.tab_ajuste, window.tab_integracao, window.tab_edo]:
+    for ex in tab.exemplos_disponiveis:
+        tab._on_exemplo_selecionado(ex)
+        tab._on_executar()
+        assert tab.ultimo_resultado['sucesso'] == True
+print('Todos os testes passaram com sucesso!')
+"
 ```
 
----
+### 6. Adicionando Novos Métodos Numéricos
 
-## Arquitetura
-
-O projeto segue uma separação estrita entre **lógica matemática** e
-**apresentação**, permitindo reutilizar o núcleo (`core/`) em qualquer outro
-contexto — testes automatizados, CLI, notebooks — sem depender de Tkinter.
-
-```mermaid
-flowchart LR
-    subgraph GUI["gui/"]
-        A["app.py<br/>(janela principal)"] --> B["tabs/*.py<br/>(uma aba por categoria)"]
-        B --> C["base_tab.py<br/>(formulário + execução + saída)"]
-        C --> D["widgets.py / theme.py"]
-    end
-
-    subgraph CORE["core/"]
-        E["parsing.py"]
-        F["raizes.py"]
-        G["sistemas_lineares.py"]
-        H["interpolacao.py"]
-        I["ajuste_curvas.py"]
-        J["integracao.py"]
-        K["edo.py"]
-    end
-
-    B -->|"chama funções puras"| CORE
-```
-
-Cada função do `core/` segue um contrato de retorno padronizado:
-
-```python
-{
-    "sucesso": bool,       # se o método convergiu / executou com êxito
-    "resultado": Any,      # valor final (raiz, solução, integral, pontos, etc.)
-    "historico": list[str],# log de iterações formatado para exibição
-    "erro": str | None,    # mensagem de erro, quando sucesso é False
-}
-```
-
-Isso torna trivial adicionar uma nova aba na GUI sem tocar no núcleo, ou
-adicionar um novo método sem tocar na interface.
-
----
-
-## Sintaxe das funções
-
-As funções matemáticas são digitadas em notação **Python/SymPy** e convertidas
-automaticamente:
-
-| Você digita | SymPy interpreta como |
-|---|---|
-| `x**3 - x - 2` | $x^3 - x - 2$ |
-| `sin(x) - x/2` | $\sin(x) - x/2$ |
-| `exp(-x) - x` | $e^{-x} - x$ |
-| `(x+2)**(1/3)` | $\sqrt[3]{x+2}$ |
-| `y - t**2 + 1` | $f(t,y) = y - t^2 + 1$ (para EDOs) |
-
-Operadores suportados: `+ - * / ** sqrt() sin() cos() tan() exp() log() abs()`,
-entre outros do SymPy. A multiplicação implícita (`2x`) também é aceita.
-
----
-
-## Exemplos rápidos
-
-<details>
-<summary><strong>Raiz de √2 pelo método da Bisseção</strong></summary>
-
-| Campo | Valor |
-|---|---|
-| f(x) | `x**2 - 2` |
-| a | `1` |
-| b | `2` |
-| Tolerância | `1e-6` |
-| Máx. iterações | `100` |
-
-**Resultado esperado:** `x ≈ 1.4142141342` (valor real: 1.41421356...)
-
-</details>
-
-<details>
-<summary><strong>Sistema linear 3×3 pela Eliminação de Gauss</strong></summary>
-
-Matriz `A` e vetor `b`:
-
-```
- 2   1  -1  |   8
--3  -1   2  | -11
--2   1   2  |  -3
-```
-
-**Resultado esperado:** `x1 = 2`, `x2 = 3`, `x3 = -1`
-
-</details>
-
-<details>
-<summary><strong>PVI dy/dt = y - t² + 1 pelo método de Euler</strong></summary>
-
-| Campo | Valor |
-|---|---|
-| f(t, y) | `y - t**2 + 1` |
-| t0 | `0` |
-| y0 | `0.5` |
-| tn | `2` |
-| h | `0.2` |
-
-**Resultado esperado:** `y(2) ≈ 4.8657`
-
-</details>
-
----
-
-## Tratamento de erros
-
-A aplicação valida entradas e captura falhas comuns antes que travem a
-execução, exibindo mensagens claras na área de resultados:
-
-- Campos vazios ou não numéricos
-- Intervalo `[a, b]` sem troca de sinal (métodos de raízes)
-- Divisão por zero (derivada nula, pivô nulo, diagonal nula)
-- Matrizes com dimensões incompatíveis ou singulares
-- Não convergência dentro do número máximo de iterações
-- Número de subintervalos incompatível com o método (ex: Simpson 1/3 exige `n` par)
-
----
-
-## Expandindo com novos métodos
-
-1. Implemente a função pura em `src/core/<categoria>.py`, retornando o
-   dicionário padrão (`sucesso`, `resultado`, `historico`, `erro`).
-2. Na aba correspondente em `src/gui/tabs/`, registre o método no dicionário
-   `metodos_disponiveis` e ajuste `_montar_formulario` / `_executar` se
-   precisar de novos campos.
-3. Nenhuma outra alteração é necessária — a classe base (`base_tab.py`) cuida
-   da exibição do histórico, badge de status e tratamento de exceções.
+1. **Implementação Matemática**: Crie a função pura em `src/core/<modulo>.py`. Ela deve receber os parâmetros matemáticos e retornar o dicionário padrão:
+   ```python
+   {
+       "sucesso": True,       # ou False em caso de falha matemática
+       "resultado": ...,      # valor numérico, vetor ou lista de pontos
+       "historico": [...],    # linhas de log/iterações formatadas
+       "erro": None           # mensagem de erro caso sucesso seja False
+   }
+   ```
+2. **Integração na Interface**:
+   - Abra a aba correspondente em `src/gui/tabs/<modulo>_tab.py`.
+   - Adicione o novo método ao dicionário `self.metodos_disponiveis`.
+   - Adicione presets de teste em `self.exemplos_disponiveis`.
+   - Ajuste `_montar_formulario`, `_executar` e `_renderizar_grafico` se o novo algoritmo exigir campos ou plotagens específicas.
 
 ---
 
 ## Licença
 
-Distribuído sob a licença MIT. Veja mais detalhes no arquivo `LICENSE`.
-
-<div align="center">
-
-Feito para apoiar o estudo de **Métodos Numéricos Computacionais**.
-
-</div>
+Distribuído sob a licença MIT. Consulte o arquivo `LICENSE` para mais detalhes.

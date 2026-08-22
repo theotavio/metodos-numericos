@@ -1,108 +1,100 @@
-import customtkinter as ctk
+"""
+Aba de Interpolação Numérica (PySide6).
+Implementa Interpolação Linear, Quadrática, Lagrange e Newton (Diferenças Divididas)
+com tabela dinâmica de pontos e curva polinomial interativa contínua.
+"""
+
+from PySide6.QtWidgets import QLabel
 from gui.base_tab import AbaBase
-from gui.widgets import CampoEntrada
+from gui.widgets import ModernInput, DynamicPointsWidget, MetricCard
 from gui import theme
 from core import interpolacao
 
 
 class InterpolacaoTab(AbaBase):
-    def __init__(self, tab):
+    def __init__(self, parent=None):
+        super().__init__(
+            titulo="📈 Interpolação Numérica — [ P(x) ]",
+            subtitulo="Construção de polinômios interpoladores P(x) e estimativa de valores intermediários",
+            parent=parent
+        )
         self.metodos_disponiveis = {
-            "Interpolação Linear": "linear",
-            "Interpolação Quadrática": "quadratica",
-            "Interpolação de Lagrange": "lagrange",
-            "Diferenças Divididas (Newton)": "newton_dd",
+            "Interpolação Linear [ 2 Pontos ]": "linear",
+            "Interpolação Quadrática [ 3 Pontos ]": "quadratica",
+            "Interpolação de Lagrange [ ∑ Lᵢ(x)yᵢ ]": "lagrange",
+            "Diferenças Divididas de Newton [ f[x₀,...,xₖ] ]": "newton_dd",
         }
-        self.entradas_pontos = []
-        super().__init__(tab, "Interpolação", "Estimativa de valores intermediários a partir de pontos conhecidos")
+        self.exemplos_disponiveis = {
+            "Polinômio Cúbico: 4 Pontos de Lagrange": {
+                "metodo": "Interpolação de Lagrange [ ∑ Lᵢ(x)yᵢ ]",
+                "pontos": [(0, 1), (1, 3), (2, 2), (3, 5)],
+                "x_alvo": "1.5"
+            },
+            "Interpolação Quadrática: Parábola (3 Pontos)": {
+                "metodo": "Interpolação Quadrática [ 3 Pontos ]",
+                "pontos": [(1, 2), (2, 5), (4, 17)],
+                "x_alvo": "3.0"
+            },
+            "Diferenças Divididas de Newton: Tabela Dividida": {
+                "metodo": "Diferenças Divididas de Newton [ f[x₀,...,xₖ] ]",
+                "pontos": [(-1, 4), (0, 1), (2, -1), (3, 2)],
+                "x_alvo": "1.0"
+            },
+            "Termodinâmica: Vapor d'Água (P vs T)": {
+                "metodo": "Interpolação de Lagrange [ ∑ Lᵢ(x)yᵢ ]",
+                "pontos": [(100, 1.013), (120, 1.985), (140, 3.613), (160, 6.178)],
+                "x_alvo": "135.0"
+            }
+        }
+        self.points_widget = None
+        self.last_points = []
+        self.last_x_alvo = 0.0
+        self.setup_ui()
 
     def _montar_formulario(self, nome_metodo):
         campos = {}
 
-        n_padrao = 3 if nome_metodo == "quadratica" else 4
-        campos["n_pontos"] = CampoEntrada(self.frame_formulario, "Número de pontos", str(n_padrao))
-        campos["n_pontos"].pack(fill="x")
+        lbl_tabela = QLabel("Tabela de Pontos Amostrados (xᵢ, yᵢ):")
+        lbl_tabela.setStyleSheet("font-size: 12px; font-weight: 500;")
+        self.layout_formulario.addWidget(lbl_tabela)
 
-        ctk.CTkButton(
-            self.frame_formulario, text="Gerar tabela de pontos",
-            command=lambda: self._gerar_tabela(campos["n_pontos"], nome_metodo),
-            **theme.estilo_botao_secundario()
-        ).pack(fill="x", pady=(0, 12))
+        padrao_pontos = [(1, 2), (2, 5), (4, 17)] if nome_metodo == "quadratica" else [(0, 1), (1, 3), (2, 2), (3, 5)]
+        self.points_widget = DynamicPointsWidget(default_points=padrao_pontos)
+        self.layout_formulario.addWidget(self.points_widget)
 
-        self.frame_pontos = ctk.CTkFrame(self.frame_formulario, fg_color="transparent")
-        self.frame_pontos.pack(fill="x")
-
-        campos["x_alvo"] = CampoEntrada(self.frame_formulario, "Valor de x a interpolar", "2.5")
-        campos["x_alvo"].pack(fill="x", pady=(6, 0))
+        campos["x_alvo"] = ModernInput(
+            "Ponto de Interpolação Alvo (x*)",
+            default_value="1.5",
+            tooltip="Ponto intermediário onde deseja calcular y* = P(x*)"
+        )
+        self.layout_formulario.addWidget(campos["x_alvo"])
 
         if nome_metodo == "quadratica":
-            ctk.CTkLabel(
-                self.frame_formulario, text="Este método utiliza exatamente 3 pontos.",
-                font=theme.FONT_LABEL_ITALICO, text_color=theme.COR_AVISO,
-                wraplength=280, justify="left"
-            ).pack(fill="x", pady=(8, 0))
+            lbl_aviso = QLabel("Nota: A interpolação quadrática exige exatamente 3 pontos com valores de x distintos.")
+            lbl_aviso.setStyleSheet(f"color: {theme.get_current_theme()['warning']}; font-size: 11px; font-style: italic;")
+            lbl_aviso.setWordWrap(True)
+            self.layout_formulario.addWidget(lbl_aviso)
 
-        self.frame_formulario.after(50, lambda: self._gerar_tabela(campos["n_pontos"], nome_metodo))
         return campos
 
-    def _gerar_tabela(self, campo_n, nome_metodo):
-        for widget in self.frame_pontos.winfo_children():
-            widget.destroy()
-        self.entradas_pontos = []
-
-        try:
-            n = int(float(campo_n.get()))
-        except ValueError:
-            self._escrever_saida("Número de pontos inválido.")
-            return
-        if nome_metodo == "quadratica":
-            n = 3
-        if n < 2 or n > 12:
-            self._escrever_saida("O número de pontos deve estar entre 2 e 12.")
-            return
-
-        cab = ctk.CTkFrame(self.frame_pontos, fg_color="transparent")
-        cab.pack(fill="x")
-        ctk.CTkLabel(cab, text="x", width=110, font=theme.FONT_LABEL,
-                     text_color=theme.COR_TEXTO_SECUNDARIO).pack(side="left", padx=3)
-        ctk.CTkLabel(cab, text="y = f(x)", width=110, font=theme.FONT_LABEL,
-                     text_color=theme.COR_TEXTO_SECUNDARIO).pack(side="left", padx=3)
-
-        for _ in range(n):
-            linha = ctk.CTkFrame(self.frame_pontos, fg_color="transparent")
-            linha.pack(fill="x", pady=2)
-            ex = ctk.CTkEntry(linha, width=110, height=30, fg_color=theme.COR_PAINEL_CLARO,
-                               border_color=theme.COR_BORDA, corner_radius=5)
-            ex.pack(side="left", padx=3)
-            ey = ctk.CTkEntry(linha, width=110, height=30, fg_color=theme.COR_PAINEL_CLARO,
-                               border_color=theme.COR_BORDA, corner_radius=5)
-            ey.pack(side="left", padx=3)
-            self.entradas_pontos.append((ex, ey))
-
-    def _ler_pontos(self):
-        if not self.entradas_pontos:
-            raise ValueError("A tabela de pontos não foi gerada.")
-        pontos = []
-        for i, (ex, ey) in enumerate(self.entradas_pontos):
-            tx, ty = ex.get().strip(), ey.get().strip()
-            if tx == "" or ty == "":
-                raise ValueError(f"O ponto {i+1} está incompleto.")
-            try:
-                x, y = float(tx.replace(",", ".")), float(ty.replace(",", "."))
-            except ValueError:
-                raise ValueError(f"O ponto {i+1} contém valores inválidos.")
-            pontos.append((x, y))
-        return pontos
+    def _carregar_exemplo(self, ex):
+        if self.points_widget and "pontos" in ex:
+            self.points_widget.set_points(ex["pontos"])
+        if "x_alvo" in self.campos_atuais and "x_alvo" in ex:
+            self.campos_atuais["x_alvo"].set(ex["x_alvo"])
 
     def _executar(self, nome_metodo, campos):
-        pontos = self._ler_pontos()
+        pontos = self.points_widget.get_points()
         x_alvo = campos["x_alvo"].get_float("Valor de x a interpolar")
+        
+        self.last_points = pontos
+        self.last_x_alvo = x_alvo
 
         if nome_metodo == "linear":
             return interpolacao.interpolacao_linear(pontos, x_alvo)
         if nome_metodo == "quadratica":
             if len(pontos) != 3:
-                raise ValueError("A interpolação quadrática exige exatamente 3 pontos.")
+                raise ValueError(f"A interpolação quadrática exige exatamente 3 pontos. Tabela possui {len(pontos)}.")
             return interpolacao.interpolacao_quadratica(pontos, x_alvo)
         if nome_metodo == "lagrange":
             return interpolacao.interpolacao_lagrange(pontos, x_alvo)
@@ -110,4 +102,29 @@ class InterpolacaoTab(AbaBase):
 
     def _formatar_resultado_final(self, resultado_dict):
         valor = resultado_dict.get("resultado")
-        return f"Valor interpolado: y ≈ {valor:.8f}"
+        if valor is None:
+            return "Sem valor interpolado."
+        return f"Valor Interpolado:\n  P({self.last_x_alvo:.4f}) ≈ {valor:.8f}"
+
+    def _atualizar_kpis(self, resultado_dict):
+        self._limpar_kpis()
+        valor = resultado_dict.get("resultado")
+        if valor is not None:
+            self.layout_kpis.addWidget(MetricCard("Ponto x*", f"{self.last_x_alvo:.4f}"))
+            self.layout_kpis.addWidget(MetricCard("Valor P(x*)", f"{valor:.8f}"))
+            self.layout_kpis.addWidget(MetricCard("Nº de Pontos (N)", str(len(self.last_points))))
+
+    def _renderizar_grafico(self, resultado_dict):
+        valor = resultado_dict.get("resultado")
+        if valor is None or not self.last_points:
+            self.plot_canvas.clear()
+            return
+
+        nome_metodo = self.combo_metodo.currentText()
+        self.plot_canvas.plot_interpolacao(
+            pontos=self.last_points,
+            x_alvo=self.last_x_alvo,
+            y_alvo=valor,
+            poly_coeffs=resultado_dict.get("coeficientes"),
+            method_name=nome_metodo
+        )
