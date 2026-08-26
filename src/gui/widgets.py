@@ -6,12 +6,67 @@ Inclui cards, badges, campos de entrada modernos, métricas, tabelas editáveis 
 import csv
 from PySide6.QtWidgets import (
     QWidget, QFrame, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit,
-    QPushButton, QTableWidget, QTableWidgetItem, QHeaderView,
+    QComboBox, QPushButton, QTableWidget, QTableWidgetItem, QHeaderView,
     QFileDialog, QApplication, QSizePolicy, QScrollArea
 )
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QFont, QColor, QClipboard
 from gui import theme
+
+
+class ModernSelect(QWidget):
+    """Campo de seleção (combobox) estilizado com rótulo moderno, tooltip e mapeamento de valores."""
+    currentTextChanged = Signal(str)
+    currentIndexChanged = Signal(int)
+
+    def __init__(self, label_text, items=None, default_value=None, tooltip="", parent=None):
+        super().__init__(parent)
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(4)
+
+        self.label = QLabel(label_text)
+        self.label.setStyleSheet("font-size: 12px; font-weight: 500;")
+        layout.addWidget(self.label)
+
+        self.combo = QComboBox()
+        self.items_map = {}
+        if items:
+            self.set_items(items, default_value)
+        if tooltip:
+            self.combo.setToolTip(tooltip)
+            self.label.setToolTip(tooltip)
+
+        self.combo.currentTextChanged.connect(self.currentTextChanged.emit)
+        self.combo.currentIndexChanged.connect(self.currentIndexChanged.emit)
+        layout.addWidget(self.combo)
+
+    def set_items(self, items, default_value=None):
+        self.combo.blockSignals(True)
+        self.combo.clear()
+        if isinstance(items, dict):
+            self.items_map = dict(items)
+            self.combo.addItems(list(items.keys()))
+        elif isinstance(items, (list, tuple)):
+            self.items_map = {item: item for item in items}
+            self.combo.addItems(items)
+        if default_value is not None:
+            self.set(default_value)
+        self.combo.blockSignals(False)
+
+    def get(self):
+        return self.combo.currentText()
+
+    def get_value(self):
+        txt = self.combo.currentText()
+        return self.items_map.get(txt, txt)
+
+    def set(self, text_or_value):
+        for k, v in self.items_map.items():
+            if v == text_or_value or k == text_or_value:
+                self.combo.setCurrentText(k)
+                return
+        self.combo.setCurrentText(str(text_or_value))
 
 
 class ModernCard(QFrame):

@@ -1,6 +1,6 @@
 """
 Módulo de Métodos Numéricos para Encontrar Raízes de Funções de Uma Variável: f(x) = 0.
-Implementa: Bisseção, Newton-Raphson, Cordas (Falsa Posição), Pégaso (Acelerado) e Iteração Linear (Ponto Fixo).
+Implementa: Bisseção, Newton-Raphson, Secante (Quasi-Newton), Cordas (Falsa Posição), Pégaso (Acelerado) e Iteração Linear (Ponto Fixo).
 """
 
 
@@ -76,6 +76,57 @@ def metodo_newton_raphson(f, df, x0, tol=1e-6, max_iter=100):
         x_atual = x_novo
 
     return {"sucesso": False, "resultado": x_atual, "historico": historico,
+            "erro": f"Máximo de iterações ({max_iter}) atingido sem convergência para tolerância {tol}.",
+            "iteracoes": max_iter}
+
+
+def metodo_secante(f, x0, x1, tol=1e-6, max_iter=100):
+    """Método da Secante (Quasi-Newton aberto sem derivada explícita)."""
+    historico = []
+    if x0 == x1:
+        return {"sucesso": False, "resultado": None, "historico": historico,
+                "erro": "Os pontos iniciais x₀ e x₁ não podem ser iguais."}
+
+    try:
+        f0 = f(x0)
+        f1 = f(x1)
+    except Exception as exc:
+        return {"sucesso": False, "resultado": None, "historico": historico,
+                "erro": f"Erro ao avaliar f(x) nos pontos iniciais: {exc}"}
+
+    historico.append(f"{'Iter':>4} | {'x_k':>14} | {'f(x_k)':>14} | {'Erro':>12}")
+    historico.append(f"{0:>4} | {x0:>14.8f} | {f0:>14.8f} | {'—':>12}")
+    historico.append(f"{1:>4} | {x1:>14.8f} | {f1:>14.8f} | {abs(x1 - x0):>12.6e}")
+
+    if abs(f1) < tol:
+        return {"sucesso": True, "resultado": x1, "historico": historico, "erro": None, "iteracoes": 1}
+
+    x_ant, f_ant = x0, f0
+    x_at, f_at = x1, f1
+
+    for i in range(2, max_iter + 1):
+        delta_f = f_at - f_ant
+        if delta_f == 0:
+            return {"sucesso": False, "resultado": None, "historico": historico,
+                    "erro": f"Divisão por zero: f(x_{i-1}) - f(x_{i-2}) = 0 na iteração {i}."}
+
+        x_novo = x_at - f_at * (x_at - x_ant) / delta_f
+        try:
+            f_novo = f(x_novo)
+        except Exception as exc:
+            return {"sucesso": False, "resultado": None, "historico": historico,
+                    "erro": f"Erro ao avaliar f(x) em x={x_novo}: {exc}"}
+
+        erro_estimado = abs(x_novo - x_at)
+        historico.append(f"{i:>4} | {x_novo:>14.8f} | {f_novo:>14.8f} | {erro_estimado:>12.6e}")
+
+        if abs(f_novo) < tol or erro_estimado < tol:
+            return {"sucesso": True, "resultado": x_novo, "historico": historico, "erro": None, "iteracoes": i}
+
+        x_ant, f_ant = x_at, f_at
+        x_at, f_at = x_novo, f_novo
+
+    return {"sucesso": False, "resultado": x_at, "historico": historico,
             "erro": f"Máximo de iterações ({max_iter}) atingido sem convergência para tolerância {tol}.",
             "iteracoes": max_iter}
 

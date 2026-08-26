@@ -61,11 +61,16 @@ construída em Python com interface gráfica nativa via **PySide6 (Qt 6)** e gr�
 <td valign="top" width="50%">
 
 ### 🔍 Raízes de Funções
-- Bisseção
-- Newton-Raphson (derivada simbólica via SymPy)
-- Método das Cordas
-- Método de Pégaso
-- Iteração Linear (Ponto Fixo)
+- Bisseção [ Intervalar ]
+- Newton-Raphson com múltiplos modos de derivada:
+  - **Simbólica** (Analítica exata via SymPy)
+  - **Diferenças Finitas** (Central $\mathcal{O}(h^2)$, Progressiva $\mathcal{O}(h)$, Regressiva $\mathcal{O}(h)$)
+  - **Passo Complexo** (*Complex-Step* com precisão $\sim 10^{-16}$)
+  - **Manual** (Expressão analítica de $f'(x)$ informada pelo usuário)
+- Método da Secante [ Quasi-Newton ]
+- Método das Cordas [ Falsa Posição ]
+- Método de Pégaso [ Acelerado ]
+- Iteração Linear [ Ponto Fixo ]
 
 ### 🧮 Sistemas Lineares
 - Eliminação de Gauss (com pivoteamento parcial)
