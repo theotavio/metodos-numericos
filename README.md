@@ -2,17 +2,17 @@
 
 # Métodos Numéricos Computacionais
 
-**Aplicação desktop moderna e interativa para resolução e visualização de problemas clássicos de Cálculo Numérico**,
-construída em Python com interface gráfica nativa via **PySide6 (Qt 6)** e gráficos dinâmicos via **Matplotlib**.
+**Aplicação web moderna, responsiva e interativa para resolução e visualização de problemas clássicos de Cálculo Numérico**,
+construída com backend em **FastAPI (Python 3.10+)** e frontend modular em **HTML5 / CSS3 / JavaScript** com gráficos interativos via **Plotly.js**.
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![PySide6](https://img.shields.io/badge/PySide6-Qt%206-41CD52?style=for-the-badge&logo=qt&logoColor=white)](https://doc.qt.io/qtforpython-6/)
-[![Matplotlib](https://img.shields.io/badge/Matplotlib-3.8%2B-11557c?style=for-the-badge)](https://matplotlib.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![SymPy](https://img.shields.io/badge/SymPy-1.12%2B-3B5526?style=for-the-badge&logo=python&logoColor=white)](https://www.sympy.org/)
 [![NumPy](https://img.shields.io/badge/NumPy-1.26%2B-013243?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org/)
+[![Plotly](https://img.shields.io/badge/Plotly.js-2.35%2B-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)](https://plotly.com/javascript/)
 
 [![License](https://img.shields.io/badge/License-MIT-33C37F?style=for-the-badge)](#licença)
-[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-0f1117?style=for-the-badge)](#guia-do-desenvolvedor)
+[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-0f1117?style=for-the-badge)](#guia-do-desenvolvedor-execução-local)
 [![Status](https://img.shields.io/badge/Status-Ativo-33C37F?style=for-the-badge)](#)
 
 </div>
@@ -21,36 +21,47 @@ construída em Python com interface gráfica nativa via **PySide6 (Qt 6)** e gr�
 
 ## Sumário
 
+- [Acesso Online (Aplicação Web)](#acesso-online-aplicação-web)
 - [Visão Geral & Recursos](#visão-geral--recursos)
 - [Métodos Implementados](#métodos-implementados)
 - [Atalhos de Teclado](#atalhos-de-teclado)
-- [Guia do Desenvolvedor](#guia-do-desenvolvedor)
+- [Guia do Desenvolvedor (Execução Local)](#guia-do-desenvolvedor-execução-local)
   - [1. Clonando o Repositório](#1-clonando-o-repositório)
   - [2. Configurando o Ambiente Virtual](#2-configurando-o-ambiente-virtual)
   - [3. Instalando as Dependências](#3-instalando-as-dependências)
-  - [4. Executando a Aplicação](#4-executando-a-aplicação)
-  - [5. Testando os Métodos](#5-testando-os-métodos)
-  - [6. Adicionando Novos Métodos Numéricos](#6-adicionando-novos-métodos-numéricos)
+  - [4. Executando a Aplicação Web](#4-executando-a-aplicação-web)
+  - [5. Documentação Interativa da API (Swagger)](#5-documentação-interativa-da-api-swagger)
+- [Sobre o Autor & Contato](#sobre-o-autor--contato)
 - [Licença](#licença)
+
+---
+
+## Acesso Online (Aplicação Web)
+
+Acesse a aplicação diretamente no seu navegador sem necessidade de instalação local:
+
+**Link de Acesso**: [https://theotavio.github.io/metodos-numericos](https://theotavio.github.io/metodos-numericos)
+
+> **Nota sobre o backend em nuvem**: Caso a API no Render esteja em modo de repouso (*cold start* por inatividade), o primeiro cálculo pode levar cerca de 30 a 50 segundos para inicializar a instância gratuita. Os cálculos seguintes responderão de forma imediata.
 
 ---
 
 ## Visão Geral & Recursos
 
-- 🎨 **Interface Moderna & Temas**: Modo Claro (*Light*) como padrão e Modo Escuro (*Dark*) com alternância instantânea via botão ou atalho `Ctrl + T`.
-- 📊 **Gráficos Interativos Integrados (Matplotlib)**:
-  - **Raízes**: Curva suave $f(x)$, eixo zero, realce do intervalo $[a, b]$, chute $x_0$ e anotação visual destacada da raiz $x^*$.
-  - **Sistemas Lineares**: Representação geométrica de retas concorrentes ($2\times 2$) e curvas de erro/convergência logarítmica (Gauss-Seidel).
+- **Design System Claro & Moderno**: Tema claro de alto contraste e legibilidade, com espaçamento generoso e menu lateral retrátil (toggle).
+- **Gráficos Interativos de Alta Precisão (Plotly.js)**:
+  - **Raízes**: Curva suave $f(x)$, linha de referência $y=0$, realce do intervalo $[a, b]$, chute inicial $x₀$ e anotação visual destacada da raiz $x^*$.
+  - **Sistemas Lineares**: Representação geométrica de retas concorrentes ($2\times 2$), barras de solução e curvas de convergência logarítmica (Gauss-Seidel).
   - **Interpolação**: Curva contínua do polinômio $P(x)$, nós conhecidos e projeção com guias pontilhadas para o ponto de consulta $x^*$.
   - **Ajuste de Curvas**: Diagrama de dispersão, reta ajustada de regressão, linhas verticais de resíduos e gráfico de paridade (Real vs Previsto).
-  - **Integração Numérica**: Área sombreada sob a curva e linhas verticais delimitadoras dos subintervalos discretos.
-  - **EDOs**: Trajetória da solução $(t, y)$ combinada com o **campo de direções (slope field)** no plano de fase.
-- 📋 **Exemplos Rápidos em 1 Clique**: Presets clássicos de livros-texto para carregamento e validação imediata em todos os módulos.
-- 💾 **Exportação & Produtividade**:
+  - **Integração Numérica**: Área sombreada sob a curva delimitada no intervalo $[a, b]$ e linhas verticais demarcando os nós de partição.
+  - **EDOs**: Trajetória da solução $(t, y)$ combinada com o **campo de direções (slope field)** de alto contraste no plano de fase.
+- **Tabelas de Iterações Detalhadas**: Exibição passo a passo de todas as fórmulas matemáticas utilizadas em cada método.
+- **Exemplos Rápidos em 1 Clique**: Presets clássicos de livros-texto e aplicações de engenharia para carregamento e validação imediata em todos os módulos.
+- **Exportação & Produtividade**:
   - Exportação direta das tabelas de iteração para arquivos **CSV**.
   - Cópia formatada de resumos e métricas para a Área de Transferência.
-  - Exportação dos gráficos em alta definição (**PNG, SVG, PDF**).
-- 🚨 **Tratamento Amigável de Erros**: Mensagens de validação e alertas matemáticos exibidos em janelas flutuantes explicativas.
+  - Exportação dos gráficos em alta definição (**PNG**).
 
 ---
 
@@ -60,7 +71,7 @@ construída em Python com interface gráfica nativa via **PySide6 (Qt 6)** e gr�
 <tr>
 <td valign="top" width="50%">
 
-### 🔍 Raízes de Funções
+### Raízes de Funções [ f(x) = 0 ]
 - Bisseção [ Intervalar ]
 - Newton-Raphson com múltiplos modos de derivada:
   - **Simbólica** (Analítica exata via SymPy)
@@ -72,11 +83,11 @@ construída em Python com interface gráfica nativa via **PySide6 (Qt 6)** e gr�
 - Método de Pégaso [ Acelerado ]
 - Iteração Linear [ Ponto Fixo ]
 
-### 🧮 Sistemas Lineares
+### Sistemas Lineares [ Ax = b ]
 - Eliminação de Gauss (com pivoteamento parcial)
-- Gauss-Seidel
+- Gauss-Seidel (com verificação de dominância diagonal)
 
-### 📈 Interpolação
+### Interpolação [ P(x) ]
 - Interpolação Linear
 - Interpolação Quadrática
 - Interpolação de Lagrange
@@ -85,17 +96,17 @@ construída em Python com interface gráfica nativa via **PySide6 (Qt 6)** e gr�
 </td>
 <td valign="top" width="50%">
 
-### ∫ Integração Numérica
+### Integração Numérica [ ∫ f(x)dx ]
 - Regra dos Trapézios
 - Regra 1/3 de Simpson
 - Regra 3/8 de Simpson
 - Quadratura Gaussiana (2 pontos de Legendre)
 
-### 📉 Ajuste de Curvas
+### Ajuste de Curvas [ ŷ = a₀+a₁x ]
 - Regressão Linear Simples (mínimos quadrados com $R^2$)
 - Regressão Linear Múltipla (mínimos quadrados matricial com $R^2$)
 
-### 🌀 Equações Diferenciais Ordinárias
+### Equações Diferenciais Ordinárias [ dy/dt = f(t, y) ]
 - Método de Euler
 - Runge-Kutta de 2ª ordem (Heun)
 - Runge-Kutta de 4ª ordem (Clássico)
@@ -111,15 +122,13 @@ construída em Python com interface gráfica nativa via **PySide6 (Qt 6)** e gr�
 | Atalho | Ação |
 |---|---|
 | `Ctrl + 1` a `Ctrl + 6` | Alternar entre os módulos de cálculo |
-| `Ctrl + T` | Alternar entre Modo Claro e Modo Escuro |
 | `F5` ou `Ctrl + Enter` | Executar o cálculo do método selecionado |
-| `Ctrl + C` | Copiar dados da tabela selecionada |
+| `Ctrl + C` | Copiar tabela de iterações ou resumo de métricas |
+| `Esc` | Fechar modais abertos |
 
 ---
 
-## Guia do Desenvolvedor
-
-Este guia detalha o passo a passo completo para configurar o ambiente de desenvolvimento local, executar e estender a aplicação.
+## Guia do Desenvolvedor (Execução Local)
 
 ### 1. Clonando o Repositório
 
@@ -130,8 +139,6 @@ cd metodos-numericos
 
 ### 2. Configurando o Ambiente Virtual
 
-Recomenda-se utilizar um ambiente virtual isolado com Python 3.10 ou superior:
-
 ```bash
 # Criação do ambiente virtual
 python -m venv venv
@@ -139,64 +146,37 @@ python -m venv venv
 # Ativação no Linux / macOS:
 source venv/bin/activate
 
-# Ativação no Windows (Prompt de Comando / PowerShell):
+# Ativação no Windows:
 venv\Scripts\activate
 ```
 
 ### 3. Instalando as Dependências
 
-Com o ambiente ativado, instale os pacotes listados no `requirements.txt`:
-
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Executando a Aplicação
-
-Inicie o ponto de entrada principal:
+### 4. Executando a Aplicação Web
 
 ```bash
-python src/main.py
+python main.py
 ```
 
-### 5. Testando os Métodos
+O servidor local será inicializado em `http://127.0.0.1:8000` e a interface web será aberta automaticamente no seu navegador.
 
-Para rodar uma validação rápida de todos os métodos e presets em modo offscreen/headless:
+### 5. Documentação Interativa da API (Swagger)
 
-```bash
-python -c "
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path('src').resolve()))
-from PySide6.QtWidgets import QApplication
-from gui.app import App
-app = QApplication(sys.argv)
-window = App()
-for tab in [window.tab_raizes, window.tab_sistemas, window.tab_interpolacao, window.tab_ajuste, window.tab_integracao, window.tab_edo]:
-    for ex in tab.exemplos_disponiveis:
-        tab._on_exemplo_selecionado(ex)
-        tab._on_executar()
-        assert tab.ultimo_resultado['sucesso'] == True
-print('Todos os testes passaram com sucesso!')
-"
-```
+Com o servidor em execução, acesse a documentação interativa em:
+- **Swagger UI**: `http://127.0.0.1:8000/api/docs`
+- **ReDoc**: `http://127.0.0.1:8000/api/redoc`
 
-### 6. Adicionando Novos Métodos Numéricos
+---
 
-1. **Implementação Matemática**: Crie a função pura em `src/core/<modulo>.py`. Ela deve receber os parâmetros matemáticos e retornar o dicionário padrão:
-   ```python
-   {
-       "sucesso": True,       # ou False em caso de falha matemática
-       "resultado": ...,      # valor numérico, vetor ou lista de pontos
-       "historico": [...],    # linhas de log/iterações formatadas
-       "erro": None           # mensagem de erro caso sucesso seja False
-   }
-   ```
-2. **Integração na Interface**:
-   - Abra a aba correspondente em `src/gui/tabs/<modulo>_tab.py`.
-   - Adicione o novo método ao dicionário `self.metodos_disponiveis`.
-   - Adicione presets de teste em `self.exemplos_disponiveis`.
-   - Ajuste `_montar_formulario`, `_executar` e `_renderizar_grafico` se o novo algoritmo exigir campos ou plotagens específicas.
+## Sobre o Autor & Contato
+
+- **GitHub**: [github.com/theotavio](https://github.com/theotavio)
+- **Sponsor**: [github.com/sponsors/theotavio](https://github.com/sponsors/theotavio)
+- **E-mail**: `otavioal2907@gmail.com`
 
 ---
 

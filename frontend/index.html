@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métodos Numéricos Computacionais</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/modules.css">
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+    <div id="app-container">
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="4 4 20 4 12 12 20 20 4 20"></polyline>
+                    </svg>
+                    <span>Métodos Numéricos</span>
+                </div>
+                <div class="brand-sub">Cálculo Numérico & Algoritmos</div>
+            </div>
+
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-section-title">MÓDULOS DE CÁLCULO</div>
+
+            <ul class="nav-menu">
+                <li>
+                    <button class="nav-item active" data-module="raizes" title="Raízes de Funções [ f(x) = 0 ]">
+                        <span class="nav-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <path d="M4 19c4-1 6-14 10-14s4 7 6 14"></path>
+                                <circle cx="12" cy="12" r="2.5" fill="currentColor"></circle>
+                            </svg>
+                        </span>
+                        <div class="nav-label">
+                            <span class="sidebar-btn-text">Raízes</span>
+                            <span class="nav-notation">f(x) = 0</span>
+                        </div>
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-item" data-module="sistemas" title="Sistemas Lineares [ Ax = b ]">
+                        <span class="nav-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h3v16H4M20 4h-3v16h3"></path>
+                                <line x1="14" y1="4" x2="14" y2="20" stroke-dasharray="2 2"></line>
+                                <circle cx="9" cy="8" r="1.5" fill="currentColor"></circle>
+                                <circle cx="9" cy="16" r="1.5" fill="currentColor"></circle>
+                                <circle cx="17" cy="8" r="1.5" fill="currentColor"></circle>
+                                <circle cx="17" cy="16" r="1.5" fill="currentColor"></circle>
+                            </svg>
+                        </span>
+                        <div class="nav-label">
+                            <span class="sidebar-btn-text">Sistemas</span>
+                            <span class="nav-notation">Ax = b</span>
+                        </div>
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-item" data-module="interpolacao" title="Interpolação Numérica [ P(x) ]">
+                        <span class="nav-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 17c4-4 8 2 12-6s4-4 6-2"></path>
+                                <circle cx="3" cy="17" r="2" fill="currentColor"></circle>
+                                <circle cx="9" cy="14" r="2" fill="currentColor"></circle>
+                                <circle cx="15" cy="9" r="2" fill="currentColor"></circle>
+                                <circle cx="21" cy="7" r="2" fill="currentColor"></circle>
+                            </svg>
+                        </span>
+                        <div class="nav-label">
+                            <span class="sidebar-btn-text">Interpolação</span>
+                            <span class="nav-notation">P(x)</span>
+                        </div>
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-item" data-module="ajuste" title="Ajuste de Curvas [ ŷ = a₀ + a₁x ]">
+                        <span class="nav-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="3" y1="21" x2="21" y2="3"></line>
+                                <circle cx="6" cy="16" r="1.8" fill="currentColor"></circle>
+                                <circle cx="10" cy="15" r="1.8" fill="currentColor"></circle>
+                                <circle cx="14" cy="9" r="1.8" fill="currentColor"></circle>
+                                <circle cx="18" cy="8" r="1.8" fill="currentColor"></circle>
+                            </svg>
+                        </span>
+                        <div class="nav-label">
+                            <span class="sidebar-btn-text">Ajuste</span>
+                            <span class="nav-notation">ŷ = a₀+a₁x</span>
+                        </div>
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-item" data-module="integracao" title="Integração Numérica [ ∫ f(x) dx ]">
+                        <span class="nav-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 4c-3 0-4 2-4 6v4c0 4-1 6-4 6"></path>
+                                <path d="M6 18c0-3 3-5 7-5s7 2 7 5"></path>
+                            </svg>
+                        </span>
+                        <div class="nav-label">
+                            <span class="sidebar-btn-text">Integração</span>
+                            <span class="nav-notation">∫ f(x)dx</span>
+                        </div>
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-item" data-module="edo" title="Equações Diferenciais [ dy/dt = f(t, y) ]">
+                        <span class="nav-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 18C10 18 12 6 20 6"></path>
+                                <polyline points="15 6 20 6 20 11"></polyline>
+                                <line x1="4" y1="12" x2="8" y2="10" stroke-dasharray="2 2"></line>
+                                <line x1="12" y1="14" x2="16" y2="10" stroke-dasharray="2 2"></line>
+                            </svg>
+                        </span>
+                        <div class="nav-label">
+                            <span class="sidebar-btn-text">EDOs</span>
+                            <span class="nav-notation">dy/dt</span>
+                        </div>
+                    </button>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-divider"></div>
+                <button type="button" class="sidebar-action-btn" id="btn-open-about" title="Sobre o Projeto">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span class="sidebar-btn-text">Sobre o Projeto</span>
+                </button>
+                <button type="button" class="sidebar-action-btn" id="btn-open-license" title="Ver Licença MIT">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                    <span class="sidebar-btn-text">Licença (MIT)</span>
+                </button>
+                <div class="app-version-badge">v3.0 • Web Application</div>
+            </div>
+        </aside>
+
+        <main id="main-content">
+            <header class="content-header">
+                <div class="header-left">
+                    <button type="button" class="btn-sidebar-toggle" id="btn-sidebar-toggle" title="Recolher / Expandir Menu Lateral">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <div class="header-title-block">
+                        <h1 class="module-title">
+                            <span id="module-header-title">Raízes de Funções</span>
+                            <span class="module-title-symbol" id="module-header-symbol">[ f(x) = 0 ]</span>
+                        </h1>
+                        <p class="module-subtitle" id="module-header-subtitle">
+                            Isolamento e refinamento de raízes de equações algébricas e transcendentes f(x) = 0
+                        </p>
+                    </div>
+                </div>
+            </header>
+
+            <div class="workspace-splitter">
+                <div class="panel-controls">
+                    <div class="modern-card">
+                        <div class="card-header">
+                            <h2 class="card-title">Configuração do Método</h2>
+                            <span class="card-subtitle">Selecione o algoritmo e modelos pré-definidos</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="select-metodo">Algoritmo de Resolução</label>
+                            <select id="select-metodo" class="form-select"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="select-preset">Exemplo Pré-configurado</label>
+                            <select id="select-preset" class="form-select">
+                                <option value="">— Selecione um Exemplo —</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modern-card">
+                        <div class="card-header">
+                            <h2 class="card-title">Parâmetros de Entrada</h2>
+                            <span class="card-subtitle">Defina valores iniciais e tolerâncias numéricas</span>
+                        </div>
+                        <div id="module-form-container"></div>
+                    </div>
+
+                    <div class="modern-card" style="gap: 10px;">
+                        <button type="button" class="btn btn-success" id="btn-executar">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                            <span>Executar Cálculo</span>
+                        </button>
+                        <button type="button" class="btn btn-ghost" id="btn-limpar">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                                <path d="M21 3v5h-5"></path>
+                                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                                <path d="M8 16H3v5"></path>
+                            </svg>
+                            <span>Limpar Dados</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-results">
+                    <div class="results-top-bar">
+                        <div class="status-group">
+                            <div class="status-badge ready" id="status-badge">
+                                <span class="status-dot"></span>
+                                <span>Pronto</span>
+                            </div>
+                            <span class="execution-time-label" id="execution-time"></span>
+                        </div>
+                        <div class="actions-group">
+                            <button type="button" class="btn btn-ghost btn-sm" id="btn-copiar-resumo" title="Copiar resumo ou tabela selecionada">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                                </svg>
+                                <span>Copiar Resumo</span>
+                            </button>
+                            <button type="button" class="btn btn-ghost btn-sm" id="btn-export-csv" title="Exportar tabela de iterações para CSV">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="8" y1="13" x2="16" y2="13"></line>
+                                    <line x1="8" y1="17" x2="16" y2="17"></line>
+                                </svg>
+                                <span>Exportar CSV</span>
+                            </button>
+                            <button type="button" class="btn btn-ghost btn-sm" id="btn-save-plot" title="Salvar imagem do gráfico em alta definição">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                    <polyline points="7 3 7 8 15 8"></polyline>
+                                </svg>
+                                <span>Salvar Gráfico</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="tabs-container">
+                        <div class="tab-header">
+                            <button type="button" class="tab-nav-btn active" data-tab="plot">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                                </svg>
+                                <span>Gráfico Interativo</span>
+                            </button>
+                            <button type="button" class="tab-nav-btn" data-tab="table">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                </svg>
+                                <span>Tabela de Iterações</span>
+                            </button>
+                            <button type="button" class="tab-nav-btn" data-tab="summary">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                </svg>
+                                <span>Resumo & Métricas</span>
+                            </button>
+                        </div>
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab-plot">
+                                <div class="plot-wrapper">
+                                    <div class="plot-controls-toolbar">
+                                        <button type="button" class="plot-tool-btn" id="btn-plot-pan" title="Mover Gráfico (Pan)">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="5 9 2 12 5 15"></polyline>
+                                                <polyline points="9 5 12 2 15 5"></polyline>
+                                                <polyline points="15 19 12 22 9 19"></polyline>
+                                                <polyline points="19 9 22 12 19 15"></polyline>
+                                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                                <line x1="12" y1="2" x2="12" y2="22"></line>
+                                            </svg>
+                                            <span>Mover</span>
+                                        </button>
+                                        <button type="button" class="plot-tool-btn" id="btn-plot-zoom" title="Zoom por Seleção Retangular">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="11" cy="11" r="8"></circle>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                            </svg>
+                                            <span>Zoom Caixa</span>
+                                        </button>
+                                        <button type="button" class="plot-tool-btn" id="btn-plot-zoomin" title="Aproximar Zoom">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="11" cy="11" r="8"></circle>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                                <line x1="11" y1="8" x2="11" y2="14"></line>
+                                                <line x1="8" y1="11" x2="14" y2="11"></line>
+                                            </svg>
+                                            <span>+ Zoom</span>
+                                        </button>
+                                        <button type="button" class="plot-tool-btn" id="btn-plot-zoomout" title="Afastar Zoom">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="11" cy="11" r="8"></circle>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                                <line x1="8" y1="11" x2="14" y2="11"></line>
+                                            </svg>
+                                            <span>- Zoom</span>
+                                        </button>
+                                        <button type="button" class="plot-tool-btn" id="btn-plot-reset" title="Restaurar Enquadramento Padrão">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                                                <path d="M21 3v5h-5"></path>
+                                                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                                                <path d="M8 16H3v5"></path>
+                                            </svg>
+                                            <span>Restaurar Posição</span>
+                                        </button>
+                                    </div>
+                                    <div id="plot-canvas" class="plot-canvas-target">
+                                        <div class="plot-placeholder">
+                                            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <line x1="18" y1="20" x2="18" y2="10"></line>
+                                                <line x1="12" y1="20" x2="12" y2="4"></line>
+                                                <line x1="6" y1="20" x2="6" y2="14"></line>
+                                            </svg>
+                                            <span>Execute um método numérico para visualizar o gráfico interativo.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tab-table">
+                                <div id="history-table-container"></div>
+                            </div>
+
+                            <div class="tab-pane" id="tab-summary">
+                                <div class="summary-pane-content">
+                                    <div class="summary-header-row">
+                                        <h3 class="summary-title" id="summary-title">Nenhum cálculo realizado ainda.</h3>
+                                    </div>
+                                    <div class="kpis-grid" id="kpis-grid"></div>
+                                    <div class="summary-math-details" id="summary-math-details" style="display: none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-backdrop" id="modal-disclaimer-backdrop">
+        <div class="modal-dialog" style="max-width: 560px;">
+            <div class="modal-header warning">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    <span>Aviso sobre Métodos e Cálculos Numéricos</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 12px;">
+                    Bem-vindo à plataforma <strong>Métodos Numéricos Computacionais</strong>.
+                </p>
+                <p style="margin-bottom: 12px; color: var(--text-secondary);">
+                    Esta aplicação foi desenvolvida com finalidade didática, científica e de exploração de algoritmos de Cálculo Numérico.
+                </p>
+                <div style="background-color: var(--bg-input); padding: 12px 14px; border-radius: var(--radius-md); border-left: 3px solid var(--warning); margin-bottom: 12px; font-size: 12px; line-height: 1.5;">
+                    <strong>Atenção aos limites dos métodos:</strong> Os cálculos numéricos utilizam aproximações iterativas e podem apresentar erros de arredondamento de ponto flutuante, erros de truncamento ou divergência caso os parâmetros iniciais (chutes x₀, limites [a, b], passo h ou tolerâncias) não satisfaçam as condições matemáticas de convergência.
+                </div>
+                <p style="font-size: 12px; color: var(--text-muted);">
+                    Sempre confira os resultados com análises analíticas ou ferramentas formais para projetos de engenharia críticos.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); cursor: pointer; user-select: none;">
+                    <input type="checkbox" id="chk-disclaimer-dontshow" style="cursor: pointer;">
+                    <span>Não exibir novamente</span>
+                </label>
+                <button type="button" class="btn btn-primary" id="modal-disclaimer-close">Continuar para a Aplicação</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="modal-about-backdrop">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <span>Sobre o Projeto</span>
+                <button type="button" class="btn-ghost btn-sm" id="modal-about-close" style="border: none; padding: 4px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 12px;">
+                    <strong>Métodos Numéricos Computacionais (v3.0)</strong> é uma plataforma web moderna desenvolvida para o estudo, resolução e visualização de problemas clássicos de Cálculo Numérico e Álgebra Linear Aplicada.
+                </p>
+                <p style="margin-bottom: 16px; color: var(--text-secondary);">
+                    Criado com arquitetura modular, backend em FastAPI/Python e interface interativa com visualizações matemáticas vetoriais em Plotly.js.
+                </p>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 16px;">
+                    <a href="https://github.com/theotavio" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="text-decoration: none; flex: 1;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                        <span>Meu GitHub</span>
+                    </a>
+                    <a href="https://github.com/sponsors/theotavio" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm" style="text-decoration: none; flex: 1; border: 1px solid var(--border);">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                        <span>Sponsor</span>
+                    </a>
+                </div>
+
+                <label class="form-label" style="margin-top: 10px;">E-mail para Contato:</label>
+                <div class="about-contact-row">
+                    <span id="about-email-text">otavioal2907@gmail.com</span>
+                    <button type="button" class="btn btn-ghost btn-sm" id="btn-copy-email" title="Copiar e-mail para a Área de Transferência">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                        </svg>
+                        <span>Copiar</span>
+                    </button>
+                </div>
+
+                <label class="form-label" style="margin-top: 10px;">URL do Backend (API):</label>
+                <div class="about-contact-row">
+                    <input type="text" id="inp-api-url" class="form-control" style="font-size: 11px; padding: 4px 8px; flex: 1; margin-right: 8px;" placeholder="https://metodos-numericos-backend.onrender.com">
+                    <button type="button" class="btn btn-ghost btn-sm" id="btn-save-api-url" title="Salvar URL da API">
+                        <span>Salvar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="modal-license-backdrop">
+        <div class="modal-dialog" style="max-width: 600px;">
+            <div class="modal-header">
+                <span>Licença do Software (MIT License)</span>
+                <button type="button" class="btn-ghost btn-sm" id="modal-license-close" style="border: none; padding: 4px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <pre id="license-text-container" style="white-space: pre-wrap; font-family: var(--font-mono); font-size: 12px; line-height: 1.5; color: var(--text-secondary); background: var(--bg-input); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border);"></pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="modal-error-backdrop">
+        <div class="modal-dialog">
+            <div class="modal-header error">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span id="modal-error-title">Falha no Cálculo Numérico</span>
+            </div>
+            <div class="modal-body" id="modal-error-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="modal-error-close">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/components/matrix-grid.js"></script>
+    <script src="js/components/points-table.js"></script>
+    <script src="js/components/multi-table.js"></script>
+    <script src="js/components/history-table.js"></script>
+    <script src="js/modules/raizes.js"></script>
+    <script src="js/modules/sistemas.js"></script>
+    <script src="js/modules/interpolacao.js"></script>
+    <script src="js/modules/ajuste.js"></script>
+    <script src="js/modules/integracao.js"></script>
+    <script src="js/modules/edo.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

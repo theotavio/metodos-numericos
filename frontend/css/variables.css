@@ -1,0 +1,63 @@
+:root {
+    --bg-main: #f8fafc;
+    --bg-sidebar: #f1f5f9;
+    --bg-card: #ffffff;
+    --bg-card-alt: #f8fafc;
+    --bg-card-hover: #f1f5f9;
+    --bg-input: #f1f5f9;
+    --bg-input-focus: #ffffff;
+    
+    --border: #e2e8f0;
+    --border-light: #cbd5e1;
+    --border-focus: #2563eb;
+    
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-active: #1e40af;
+    --primary-subtle: rgba(37, 99, 235, 0.08);
+    
+    --success: #059669;
+    --success-hover: #047857;
+    --success-subtle: rgba(5, 150, 105, 0.10);
+    
+    --warning: #d97706;
+    --warning-hover: #b45309;
+    --warning-subtle: rgba(217, 119, 6, 0.10);
+    
+    --danger: #dc2626;
+    --danger-hover: #b91c1c;
+    --danger-subtle: rgba(220, 38, 38, 0.10);
+    
+    --info: #0284c7;
+    --purple: #7c3aed;
+    
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --text-on-primary: #ffffff;
+    
+    --plot-bg: #ffffff;
+    --plot-paper-bg: #ffffff;
+    --plot-text: #0f172a;
+    --plot-grid: #e2e8f0;
+    --plot-accent: #0284c7;
+    --plot-accent-sec: #e11d48;
+    --plot-accent-ter: #059669;
+    --plot-accent-qua: #d97706;
+    --plot-slope-field: #334155;
+    
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.09), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+    
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-full: 9999px;
+    
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "Cascadia Code", "Fira Code", "JetBrains Mono", Consolas, Menlo, monospace;
+    
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
+}
