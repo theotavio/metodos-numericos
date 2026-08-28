@@ -12,7 +12,7 @@ construída com backend em **FastAPI (Python 3.10+)** e frontend modular em **HT
 [![Plotly](https://img.shields.io/badge/Plotly.js-2.35%2B-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)](https://plotly.com/javascript/)
 
 [![License](https://img.shields.io/badge/License-MIT-33C37F?style=for-the-badge)](#licença)
-[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-0f1117?style=for-the-badge)](#guia-do-desenvolvedor-execução-local)
+[![Platform](https://img.shields.io/badge/Platform-Web-0f1117?style=for-the-badge)](#acesso-online-aplicação-web)
 [![Status](https://img.shields.io/badge/Status-Ativo-33C37F?style=for-the-badge)](#)
 
 </div>
@@ -21,10 +21,10 @@ construída com backend em **FastAPI (Python 3.10+)** e frontend modular em **HT
 
 ## Sumário
 
-- [Acesso Online (Aplicação Web)](#acesso-online-aplicação-web)
 - [Visão Geral & Recursos](#visão-geral--recursos)
 - [Métodos Implementados](#métodos-implementados)
 - [Atalhos de Teclado](#atalhos-de-teclado)
+- [Acesso Online (Aplicação Web)](#acesso-online-aplicação-web)
 - [Guia do Desenvolvedor (Execução Local)](#guia-do-desenvolvedor-execução-local)
   - [1. Clonando o Repositório](#1-clonando-o-repositório)
   - [2. Configurando o Ambiente Virtual](#2-configurando-o-ambiente-virtual)
@@ -33,16 +33,6 @@ construída com backend em **FastAPI (Python 3.10+)** e frontend modular em **HT
   - [5. Documentação Interativa da API (Swagger)](#5-documentação-interativa-da-api-swagger)
 - [Sobre o Autor & Contato](#sobre-o-autor--contato)
 - [Licença](#licença)
-
----
-
-## Acesso Online (Aplicação Web)
-
-Acesse a aplicação diretamente no seu navegador sem necessidade de instalação local:
-
-**Link de Acesso**: [https://theotavio.github.io/metodos-numericos](https://theotavio.github.io/metodos-numericos)
-
-> **Nota sobre o backend em nuvem**: Caso a API no Render esteja em modo de repouso (*cold start* por inatividade), o primeiro cálculo pode levar cerca de 30 a 50 segundos para inicializar a instância gratuita. Os cálculos seguintes responderão de forma imediata.
 
 ---
 
@@ -125,6 +115,16 @@ Acesse a aplicação diretamente no seu navegador sem necessidade de instalaçã
 | `F5` ou `Ctrl + Enter` | Executar o cálculo do método selecionado |
 | `Ctrl + C` | Copiar tabela de iterações ou resumo de métricas |
 | `Esc` | Fechar modais abertos |
+
+---
+
+## Acesso Online (Aplicação Web)
+
+Acesse a aplicação diretamente no seu navegador através do GitHub Pages, sem necessidade de instalação local:
+
+**Link de Acesso**: [https://theotavio.github.io/metodos-numericos](https://theotavio.github.io/metodos-numericos)
+
+> **Nota sobre o backend em nuvem**: Caso a API no Render esteja em modo de repouso (*cold start* por inatividade), o primeiro cálculo pode levar cerca de 30 a 50 segundos para inicializar a instância gratuita. Os cálculos seguintes responderão de forma imediata.
 
 ---
 
