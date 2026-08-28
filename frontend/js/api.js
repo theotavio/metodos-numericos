@@ -11,14 +11,10 @@ class ApiClient {
         if(savedUrl){
             return savedUrl.replace(/\/+$/, "");
         }
-        const isLocal = window.location.hostname === "localhost" || 
-                        window.location.hostname === "127.0.0.1" || 
-                        window.location.hostname === "0.0.0.0" || 
-                        window.location.protocol === "file:";
-        if(isLocal){
-            return "";
+        if(window.location.hostname.includes("github.io")){
+            return "https://metodos-numericos-vviw.onrender.com";
         }
-        return "https://metodos-numericos-backend.onrender.com";
+        return "";
     }
 
     setBaseUrl(url){
