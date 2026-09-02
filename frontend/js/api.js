@@ -26,6 +26,14 @@ class ApiClient {
         }
     }
 
+    async checkHealth(){
+        const response = await fetch(`${this.baseUrl}/api/health`, { cache: "no-store" });
+        if(!response.ok){
+            throw new Error(`HTTP ${response.status}`);
+        }
+        return await response.json();
+    }
+
     async getModulos(){
         const response = await fetch(`${this.baseUrl}/api/modulos`);
         if(!response.ok){

@@ -636,3 +636,18 @@
         transform: translateY(0);
     }
 }
+
+.server-loading-spinner {
+    width: 44px;
+    height: 44px;
+    border: 3.5px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: var(--radius-full);
+    animation: server-spin 0.8s linear infinite;
+}
+
+@keyframes server-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

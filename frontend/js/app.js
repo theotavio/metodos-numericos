@@ -23,6 +23,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const modalDisclaimerClose = document.getElementById("modal-disclaimer-close");
     const chkDisclaimerDontShow = document.getElementById("chk-disclaimer-dontshow");
 
+    const modalServerLoadingBackdrop = document.getElementById("modal-server-loading-backdrop");
+    const serverLoadingStatusText = document.getElementById("server-loading-status-text");
+
     const modalErrorBackdrop = document.getElementById("modal-error-backdrop");
     const modalErrorTitle = document.getElementById("modal-error-title");
     const modalErrorBody = document.getElementById("modal-error-body");
@@ -154,7 +157,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         btnSaveApiUrl.addEventListener("click", async () => {
             const newUrl = inpApiUrl.value.trim();
             window.apiClient.setBaseUrl(newUrl);
-            showToast("URL da API atualizada com sucesso!", "success");
+            modalAboutBackdrop.classList.remove("open");
+            showToast("URL da API atualizada! Verificando conexão...", "info");
+            await ensureServerReady();
             await loadCatalog();
             await switchModule(currentModuleId);
         });
@@ -552,6 +557,43 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 
+    async function ensureServerReady(){
+        let serverReady = false;
+        let secondsElapsed = 0;
+        let intervalId = null;
+
+        if(modalServerLoadingBackdrop){
+            modalServerLoadingBackdrop.classList.add("open");
+        }
+        setStatus("running", "Iniciando servidor...");
+
+        intervalId = setInterval(() => {
+            secondsElapsed += 1;
+            if(serverLoadingStatusText){
+                serverLoadingStatusText.textContent = `Conectando ao servidor (${secondsElapsed}s)...`;
+            }
+        }, 1000);
+
+        while(!serverReady){
+            try{
+                await window.apiClient.checkHealth();
+                serverReady = true;
+            }catch(e){
+                await new Promise((resolve) => setTimeout(resolve, 1500));
+            }
+        }
+
+        if(intervalId){
+            clearInterval(intervalId);
+        }
+
+        if(modalServerLoadingBackdrop){
+            modalServerLoadingBackdrop.classList.remove("open");
+        }
+        setStatus("ready", "Pronto");
+    }
+
+    await ensureServerReady();
     await loadCatalog();
     await switchModule("raizes");
     checkAndShowDisclaimer();

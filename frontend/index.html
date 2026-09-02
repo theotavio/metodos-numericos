@@ -476,6 +476,23 @@
         </div>
     </div>
 
+    <div class="modal-backdrop" id="modal-server-loading-backdrop">
+        <div class="modal-dialog" style="max-width: 440px; text-align: center;">
+            <div class="modal-body" style="padding: 36px 24px; display: flex; flex-direction: column; align-items: center; gap: 14px;">
+                <div class="server-loading-spinner"></div>
+                <div style="font-size: 16px; font-weight: 700; color: var(--text-primary);">
+                    Iniciando Servidor Backend
+                </div>
+                <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                    O servidor em nuvem gratuito entra em modo de repouso por inatividade e está sendo inicializado. Isso pode levar alguns segundos.
+                </p>
+                <div id="server-loading-status-text" style="font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--primary); background: var(--primary-subtle); padding: 6px 14px; border-radius: var(--radius-full);">
+                    Conectando ao servidor...
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-backdrop" id="modal-error-backdrop">
         <div class="modal-dialog">
             <div class="modal-header error">
